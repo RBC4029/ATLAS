@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Atlas Intake v1</title>
+<style>
+body{font-family:Arial;background:#eef3f8;margin:0}
+header{background:#0f172a;color:white;padding:18px}
+.container{display:grid;grid-template-columns:1fr 1fr;gap:20px;padding:20px}
+.card{background:white;border-radius:12px;padding:20px;box-shadow:0 4px 15px rgba(0,0,0,.08)}
+textarea{width:100%;height:320px}
+button{padding:12px 18px;background:#2563eb;color:white;border:none;border-radius:8px;margin-top:12px;cursor:pointer}
+.badge{display:inline-block;padding:6px 10px;border-radius:20px;background:#dbeafe;color:#1d4ed8;font-weight:bold}
+</style>
+</head>
+<body>
+<header><h2>Atlas Intake - Sprint 1</h2></header>
+<div class="container">
+<div class="card">
+<h3>Déclaration</h3>
+<textarea id="claim">Je déclare une fuite d'eau provenant du plafond ayant endommagé le parquet.</textarea><br>
+<button onclick="analyse()">Analyser</button>
+</div>
+<div class="card">
+<h3>Décision de tri</h3>
+<div id="out">En attente d'analyse...</div>
+</div>
+</div>
+<script>
+function analyse(){
+const t=document.getElementById('claim').value.toLowerCase();
+let branche='MRH';
+let type='Dégât des eaux';
+if(t.includes('accident')||t.includes('voiture')||t.includes('véhicule')){
+ branche='AUTO';
+ type='Collision';
+}
+document.getElementById('out').innerHTML=`
+<div class='badge'>${branche}</div>
+<p><b>Type :</b> ${type}</p>
+<p><b>Parcours :</b> Analyse gestionnaire</p>
+<p><b>Orientation :</b> Equipe ${branche}</p>
+<p><b>Confiance :</b> 92%</p>
+<p><b>Pièces manquantes :</b> Devis, Photos complémentaires</p>
+<button>Valider</button>
+`;
+}
+</script>
+</body>
+</html>

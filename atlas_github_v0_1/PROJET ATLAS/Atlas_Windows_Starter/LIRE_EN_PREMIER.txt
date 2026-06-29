@@ -1,0 +1,10 @@
+ATLAS - Démarrage simplifié
+
+Objectif final :
+Un Atlas.exe.
+
+En attendant, ce pack contient les scripts qui serviront de base.
+
+- lancer_demo.bat : ouvrira la future interface Atlas.
+- lancer_backend.bat : démarrera l'API FastAPI.
+- architecture.txt : architecture cible.

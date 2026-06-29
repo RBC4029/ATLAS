@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<title>Atlas v0.1</title>
+<style>
+body{font-family:Arial;margin:0;background:#eef3f8;color:#172033}
+header{background:#0f172a;color:white;padding:18px 24px}
+main{max-width:1100px;margin:25px auto;display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{background:white;border-radius:14px;padding:20px;box-shadow:0 6px 18px rgba(0,0,0,.08)}
+textarea{width:100%;height:350px;border:1px solid #cbd5e1;border-radius:10px;padding:12px}
+button{background:#2563eb;color:white;border:0;border-radius:8px;padding:12px 16px;font-weight:bold;margin-top:10px;cursor:pointer}
+pre{white-space:pre-wrap;background:#f8fafc;border:1px solid #e5e7eb;border-radius:10px;padding:14px}
+</style>
+</head>
+<body>
+<header><h2>Atlas — Copilote de pré-instruction</h2></header>
+<main>
+<section class="card">
+<h3>Déclaration</h3>
+<textarea id="txt">Dégât des eaux au 12 rue Victor Hugo. Fuite du voisin du dessus. Photos et devis 2350 euros.</textarea>
+<button onclick="analyze()">Analyser localement</button>
+</section>
+<section class="card">
+<h3>Résultat</h3>
+<pre id="out">En attente.</pre>
+</section>
+</main>
+<script>
+function analyze(){
+ const text=document.getElementById("txt").value.toLowerCase();
+ let branch="UNKNOWN", type="Non identifié", convention=null, recourse="Non";
+ if(["fuite","eau","parquet","plafond"].some(w=>text.includes(w))){
+   branch="MRH"; type="Dégât des eaux";
+   if(text.includes("voisin")){ convention="IRSI"; }
+ }
+ if(["auto","voiture","accident","véhicule"].some(w=>text.includes(w))){
+   branch="AUTO"; type="Collision"; convention=text.includes("tiers")||text.includes("constat")?"IRSA / IDA":"IRSA / IDA à vérifier";
+ }
+ const amountMatch=text.match(/(\d+)\s*(€|eur|euros)/);
+ const amount=amountMatch?parseInt(amountMatch[1]):null;
+ if(branch==="MRH" && convention==="IRSI" && amount && amount>1600){ recourse="Oui, recours recommandé"; }
+ if(branch==="AUTO" && convention && convention.includes("IRSA")){ recourse="Selon responsabilité et convention"; }
+ document.getElementById("out").textContent=JSON.stringify({
+   branch, type, convention, amount, recourse,
+   validation:"gestionnaire obligatoire"
+ },null,2);
+}
+</script>
+</body>
+</html>

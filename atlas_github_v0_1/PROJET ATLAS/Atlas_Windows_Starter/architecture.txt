@@ -1,0 +1,11 @@
+VERSION FINALE
+
+[Atlas.exe]
+      |
+      +-- Interface React
+      +-- Backend FastAPI
+      +-- Atlas Brain
+      +-- Base de connaissances
+      +-- OCR
+      +-- IA
+      +-- API
